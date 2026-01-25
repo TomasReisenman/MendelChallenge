@@ -100,7 +100,7 @@ public class TransactionTest extends BaseIntegrationTest {
 
     TransactionCreationRequest req1 = new TransactionCreationRequest();
     req1.setAmount(5000D);
-    req1.setType("car");
+    req1.setType("cars");
     req1.setParentId(null);
 
     TransactionCreationRequest req2 = new TransactionCreationRequest();
@@ -130,7 +130,7 @@ public class TransactionTest extends BaseIntegrationTest {
 
     given()
         .when()
-        .get(TRANSACTION_URL + "types/car")
+        .get(TRANSACTION_URL + "types/cars")
         .then()
         .log().body()
         .statusCode(HttpStatus.SC_OK)
@@ -159,7 +159,7 @@ public class TransactionTest extends BaseIntegrationTest {
   void verify_transaction_with_zero_amount_is_rejected() {
     TransactionCreationRequest request = new TransactionCreationRequest();
     request.setAmount(0D);
-    request.setType("car");
+    request.setType("cars");
     request.setParentId(null);
 
     given()
