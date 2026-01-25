@@ -2,6 +2,7 @@ package com.mendel.MendelChallenge.service;
 
 import com.mendel.MendelChallenge.exception.TransactionAlreadyExistsException;
 import com.mendel.MendelChallenge.exception.TransactionNotFoundException;
+import com.mendel.MendelChallenge.exception.TransactionValidationException;
 import com.mendel.MendelChallenge.model.Transaction;
 import com.mendel.MendelChallenge.model.TransactionCreationRequest;
 import com.mendel.MendelChallenge.model.TransactionCreationResult;
@@ -22,6 +23,12 @@ public class TransactionService {
 
   public TransactionCreationResult processTransaction(
       Long transactionId, TransactionCreationRequest request) {
+
+    String validationErrors = TransactionValidator.validateTransaction(transactionId, request);
+
+    if (!validationErrors.isEmpty()) {
+      throw new TransactionValidationException(validationErrors);
+    }
     Transaction transaction = TransactionMapper.mapToEntity(transactionId, request);
 
     TransactionCreationResult result = new TransactionCreationResult("ok");
